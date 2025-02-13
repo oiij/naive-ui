@@ -5,20 +5,25 @@ Features:
 - Bundle with [tsup](https://github.com/egoist/tsup)
 - Test with [vitest](https://vitest.dev)
 
-# Usage
-
-### 本地包测试
-
-当前目录下执行：
+## Usage
 
 ```bash
-pnpm link --global --dir=./
+pnpm add @oiij/naive-ui
 ```
 
-目标目录：
-
-```bash
-pnpm link --global <package name>
+```ts
+import { useNaiveForm, useNaiveTheme } from '@oiij/naive-ui'
+const { theme, themeOverrides, locale, dateLocale, color, setColor, } = useNaiveTheme()
+const { formRef, formProps, formValue, rules, validate, resetValidation, resetForm, reset, clear, } = useNaiveForm({
+  value: {
+    foo: ''
+  },
+  rules: {
+    foo: {
+      required: true
+    }
+  }
+})
 ```
 
 ## License

@@ -1,18 +1,19 @@
 {
-  "name": "ts-starter",
+  "name": "@oiij/naive-ui",
   "type": "module",
   "version": "0.0.1",
   "description": "",
   "author": "oiij",
   "license": "MIT",
-  "homepage": "https://github.com/oiij/ts-starter",
+  "homepage": "https://github.com/oiij/naive-ui",
   "repository": {
     "type": "git",
-    "url": "git@github.com:oiij/ts-starter.git"
+    "url": "git@github.com:oiij/naive-ui.git"
   },
-  "bugs": "https://github.com/oiij/ts-starter/issues",
+  "bugs": "https://github.com/oiij/naive-ui/issues",
   "keywords": [
-    "ts-starter"
+    "@oiij,naive-ui",
+    "naive-ui extra"
   ],
   "sideEffects": false,
   "exports": {
@@ -52,11 +53,16 @@
     "preinstall": "npx only-allow pnpm",
     "postinstall": "npx simple-git-hooks"
   },
+  "dependencies": {
+    "colord": "^2.9.3",
+    "mixte": "3.0.0-beta.3"
+  },
   "devDependencies": {
     "@antfu/eslint-config": "^4.2.0",
     "@oiij/tsconfig": "^0.0.1",
     "@types/node": "^22.13.1",
     "@vitest/ui": "^3.0.5",
+    "async-validator": "^4.2.5",
     "bumpp": "^10.0.3",
     "commitlint": "^19.7.1",
     "cz-git": "^1.11.0",
@@ -65,12 +71,14 @@
     "eslint-plugin-format": "^1.0.1",
     "esno": "^4.8.0",
     "lint-staged": "^15.4.3",
+    "naive-ui": "^2.40.3",
     "simple-git-hooks": "^2.11.1",
     "taze": "^18.5.0",
     "tsup": "8.3.6",
     "typescript": "^5.7.3",
     "unbuild": "^3.3.1",
-    "vitest": "^3.0.5"
+    "vitest": "^3.0.5",
+    "vue": "^3.5.13"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged && pnpm type:check"
