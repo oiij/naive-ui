@@ -1,6 +1,5 @@
 import type { FormInst, FormItemRule, FormRules } from 'naive-ui'
 import type { Ref } from 'vue'
-import { deepClone, isObject } from 'mixte'
 import { nextTick, reactive, ref, toValue } from 'vue'
 
 export interface NaiveFormOptions<T extends object = Record<string, any>> {
@@ -17,7 +16,7 @@ export function useNaiveForm<T extends Record<string, any>>(options?: NaiveFormO
     model: reactive<T>(toValue(userFormValue)),
     rules: userFormRules,
   }
-  const formInitialValues = deepClone(value)
+  const formInitialValues = structuredClone(value)
 
   function validate() {
     return formRef.value?.validate()
@@ -27,7 +26,7 @@ export function useNaiveForm<T extends Record<string, any>>(options?: NaiveFormO
   }
   function clear() {
     Object.keys(userFormValue.value).forEach((key) => {
-      userFormValue.value[key] = Array.isArray(userFormValue.value[key]) ? [] : isObject(userFormValue.value[key]) ? {} : null
+      userFormValue.value[key] = Array.isArray(userFormValue.value[key]) ? [] : typeof userFormValue.value[key] === 'object' ? {} : null
     })
   }
   function resetForm() {
