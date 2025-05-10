@@ -18,7 +18,7 @@ Features:
 pnpm add @oiij/naive-ui
 ```
 
-在线文档
+[在线文档](https://naive-ui-mu.vercel.app/)
 
 ## License
 
