@@ -1,5 +1,5 @@
 import type { GlobalThemeOverrides, NDateLocale } from 'naive-ui'
-import type { ComputedRef } from 'vue'
+import type { ComputedRef, Ref } from 'vue'
 import { colord } from 'colord'
 import {
   darkTheme,
@@ -43,8 +43,15 @@ const naiveLocaleMap: {
     locale: enUS,
   },
 }
-
-export function useNaiveTheme(darkMode?: ComputedRef<boolean>, language?: ComputedRef<'zh-CN' | 'en-US'>, globalThemeOverrides?: GlobalThemeOverrides) {
+export interface NaiveThemeReturns {
+  theme: ComputedRef<typeof darkTheme | undefined>
+  themeOverrides: ComputedRef<GlobalThemeOverrides>
+  locale: ComputedRef<typeof zhCN | typeof enUS>
+  dateLocale: ComputedRef<NDateLocale>
+  color: Ref<Color>
+  setColor: (v: Color) => void
+}
+export function useNaiveTheme<T extends 'zh-CN' | 'en-US'>(darkMode?: ComputedRef<boolean> | Ref<boolean>, language?: ComputedRef<T> | Ref<T>, globalThemeOverrides?: GlobalThemeOverrides): NaiveThemeReturns {
   const { common, Dialog, ...extra } = globalThemeOverrides || {}
   const color = ref<Color>({
     primary: '#64748B',
@@ -60,29 +67,34 @@ export function useNaiveTheme(darkMode?: ComputedRef<boolean>, language?: Comput
     return darkMode?.value ? darkTheme : undefined
   })
   const themeOverrides: ComputedRef<GlobalThemeOverrides> = computed(() => {
+    const primary = getStatusColor(color.value.primary)
+    const info = getStatusColor(color.value.info)
+    const success = getStatusColor(color.value.success)
+    const warning = getStatusColor(color.value.warning)
+    const error = getStatusColor(color.value.error)
     return {
       common: {
         bodyColor: darkMode?.value ? '#1f1f1f' : '#f5f5f5',
-        primaryColor: color.value.primary,
-        primaryColorHover: getStatusColor(color.value.primary).hover,
-        primaryColorPressed: getStatusColor(color.value.primary).pressed,
-        primaryColorSuppl: getStatusColor(color.value.primary).suppl,
-        infoColor: color.value.info,
-        infoColorHover: getStatusColor(color.value.info).hover,
-        infoColorPressed: getStatusColor(color.value.info).pressed,
-        infoColorSuppl: getStatusColor(color.value.info).suppl,
-        successColor: color.value.success,
-        successColorHover: getStatusColor(color.value.success).hover,
-        successColorPressed: getStatusColor(color.value.success).pressed,
-        successColorSuppl: getStatusColor(color.value.success).suppl,
-        warningColor: color.value.warning,
-        warningColorHover: getStatusColor(color.value.warning).hover,
-        warningColorPressed: getStatusColor(color.value.warning).pressed,
-        warningColorSuppl: getStatusColor(color.value.warning).suppl,
-        errorColor: color.value.error,
-        errorColorHover: getStatusColor(color.value.error).hover,
-        errorColorPressed: getStatusColor(color.value.error).pressed,
-        errorColorSuppl: getStatusColor(color.value.error).suppl,
+        primaryColor: primary.color,
+        primaryColorHover: primary.hover,
+        primaryColorPressed: primary.pressed,
+        primaryColorSuppl: primary.suppl,
+        infoColor: info.color,
+        infoColorHover: info.hover,
+        infoColorPressed: info.pressed,
+        infoColorSuppl: info.suppl,
+        successColor: success.color,
+        successColorHover: success.hover,
+        successColorPressed: success.pressed,
+        successColorSuppl: success.suppl,
+        warningColor: warning.color,
+        warningColorHover: warning.hover,
+        warningColorPressed: warning.pressed,
+        warningColorSuppl: warning.suppl,
+        errorColor: error.color,
+        errorColorHover: error.hover,
+        errorColorPressed: error.pressed,
+        errorColorSuppl: error.suppl,
         borderRadius: '6px',
         ...common,
       },

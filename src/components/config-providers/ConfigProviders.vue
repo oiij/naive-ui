@@ -30,6 +30,7 @@ import {
 import { defineComponent, onMounted } from 'vue'
 
 const {
+  globalStyle = false,
   configProviderProps,
   loadingBarProps,
   dialogProviderProps,
@@ -37,6 +38,7 @@ const {
   notificationProviderProps,
   messageProviderProps,
 } = defineProps<{
+  globalStyle?: boolean
   configProviderProps?: ConfigProviderProps
   loadingBarProps?: LoadingBarProviderProps
   dialogProviderProps?: DialogProviderProps
@@ -74,10 +76,7 @@ const NaiveProviderContent = defineComponent({
 </script>
 
 <template>
-  <NConfigProvider
-    abstract
-    v-bind="configProviderProps"
-  >
+  <NConfigProvider v-bind="configProviderProps">
     <NLoadingBarProvider v-bind="loadingBarProps">
       <NDialogProvider v-bind="dialogProviderProps">
         <NModalProvider v-bind="modalProviderProps">
@@ -90,7 +89,7 @@ const NaiveProviderContent = defineComponent({
         </NModalProvider>
       </NDialogProvider>
     </NLoadingBarProvider>
-    <NGlobalStyle />
+    <NGlobalStyle v-if="globalStyle" />
   </NConfigProvider>
 </template>
 

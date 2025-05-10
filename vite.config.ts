@@ -42,7 +42,6 @@ export default defineConfig({
   resolve: {
     alias: {
       '~': resolve(__dirname, './src'),
-      '@oiij/naive-ui/components': resolve(__dirname, './src/components.ts'),
     },
   },
 })

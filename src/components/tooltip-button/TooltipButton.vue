@@ -2,13 +2,13 @@
 import type { ButtonProps, TooltipProps } from 'naive-ui'
 import { NButton, NTooltip } from 'naive-ui'
 
-const { tooltip, tooltipProps, buttonProps } = defineProps<{
-  tooltip?: string
+const { value, tooltipProps, buttonProps } = defineProps<{
+  value?: string
   tooltipProps?: TooltipProps
   buttonProps?: ButtonProps
 }>()
 const emit = defineEmits<{
-  (e: 'click', ev?: MouseEvent): void
+  (e: 'click', ev: MouseEvent): void
 }>()
 </script>
 
@@ -23,7 +23,7 @@ const emit = defineEmits<{
       </NButton>
     </template>
     <slot name="tooltip">
-      {{ tooltip }}
+      {{ value }}
     </slot>
   </NTooltip>
 </template>
